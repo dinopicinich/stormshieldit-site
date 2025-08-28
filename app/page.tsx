@@ -3,7 +3,7 @@
 import type React from "react";
 import Image from "next/image";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Script from "next/script";
 
 export default function StormShieldLanding() {
@@ -13,6 +13,7 @@ export default function StormShieldLanding() {
     { name: "Industries", href: "#industries" },
     { name: "Pricing", href: "#pricing" },
     { name: "Contact", href: "#contact" },
+    { name: "About", href: "/about" },
   ];
 
   // ---- constants ----
@@ -22,6 +23,15 @@ export default function StormShieldLanding() {
   // ---- ui state ----
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+useEffect(() => {
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") setMobileOpen(false);
+  };
+  if (mobileOpen) document.addEventListener("keydown", onKeyDown);
+  return () => document.removeEventListener("keydown", onKeyDown);
+}, [mobileOpen]);
 
   // ---- submit handler (tolerant + no console noise) ----
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -354,6 +364,59 @@ export default function StormShieldLanding() {
       >
         Book a Call
       </a>
+      {/* Floating Mobile Menu (hamburger) */}
+      <button
+        type="button"
+        aria-label="Open menu"
+        onClick={() => setMobileOpen(true)}
+        className="fixed bottom-6 left-6 z-50 inline-flex items-center justify-center rounded-full bg-slate-800 px-4 py-3 shadow-lg ring-1 ring-white/10 md:hidden hover:bg-slate-700 transition"
+      >
+        {/* hamburger icon */}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+
+        {/* Mobile menu overlay */}
+        {mobileOpen && (
+          <div className="fixed inset-0 z-[60] md:hidden" role="dialog" aria-modal="true">
+            {/* backdrop */}
+            <div
+              className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"
+              onClick={() => setMobileOpen(false)}
+            />
+
+    {/* bottom sheet panel */}
+    <div className="absolute inset-x-0 bottom-0 rounded-t-3xl border-t border-slate-800 bg-slate-900 p-6 shadow-2xl">
+      <div className="mb-4 flex items-center justify-between">
+        <span className="text-sm font-semibold text-slate-300">Menu</span>
+        <button
+          type="button"
+          aria-label="Close menu"
+          onClick={() => setMobileOpen(false)}
+          className="rounded-full p-2 text-slate-300 hover:bg-slate-800"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <nav className="grid gap-2">
+        {navItems.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            onClick={() => setMobileOpen(false)}
+            className="rounded-xl px-4 py-3 text-base font-medium text-slate-200 hover:bg-slate-800"
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+)}
     </div>
   );
 }
