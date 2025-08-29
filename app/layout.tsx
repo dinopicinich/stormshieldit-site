@@ -12,21 +12,26 @@ export const metadata: Metadata = {
   description: "Managed IT & Security for Business Continuity",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
-        {/* Favicon(s) if you have them */}
+        {/* Favicons (optional) */}
         <link rel="icon" href="/favicon-32.png" sizes="32x32" />
         <link rel="icon" href="/favicon-512.png" sizes="512x512" />
-        {/* Calendly stylesheet */}
+
+        {/* Calendly stylesheet (MUST be lowercase <link>) */}
         <link
           href="https://assets.calendly.com/assets/external/widget.css"
           rel="stylesheet"
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Calendly script (needed for inline embed) */}
+        {/* Calendly script for inline embeds (safe in body via next/script) */}
         <Script
           src="https://assets.calendly.com/assets/external/widget.js"
           strategy="afterInteractive"
