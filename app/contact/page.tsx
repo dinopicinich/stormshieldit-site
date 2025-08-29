@@ -1,28 +1,14 @@
-import Head from "next/head";
+// app/contact/page.tsx
 import Image from "next/image";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import CalendlyEmbed from "../components/CalendlyEmbed";
 
-const CALENDLY_URL = "https://calendly.com/stormshieldit/30min";
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnnbqnlw";
-
-export const metadata = {
-  title: "Contact • StormShield IT",
-  description: "Book a discovery call or send us a note.",
-};
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
-      {/* Calendly CSS */}
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://assets.calendly.com/assets/external/widget.css"
-        />
-      </Head>
-
       <SiteHeader />
 
       <main className="flex-1">
@@ -48,7 +34,9 @@ export default function ContactPage() {
               <div className="mt-6 space-y-2 text-slate-200">
                 <p>
                   <span className="text-slate-400">Phone:</span>{" "}
-                  <a className="hover:underline" href="tel:+17322722202">(732) 272-2202</a>
+                  <a className="hover:underline" href="tel:+17322722202">
+                    (732) 272-2202
+                  </a>
                 </p>
                 <p>
                   <span className="text-slate-400">Email:</span>{" "}
@@ -56,55 +44,91 @@ export default function ContactPage() {
                     sales@stormshieldit.com
                   </a>
                 </p>
-                <p><span className="text-slate-400">Hours:</span> 8am–6pm ET • 24/7 emergency</p>
+                <p>
+                  <span className="text-slate-400">Hours:</span> 8am–6pm ET • 24/7 emergency
+                </p>
               </div>
             </div>
 
-            {/* Formspree form */}
+            {/* Formspree form (no client JS needed) */}
             <form
               action={FORMSPREE_ENDPOINT}
               method="POST"
-              className="rounded-3xl border border-slate-800 bg-slate-900/40 p-6"
+              className="rounded-3xl border border-slate-800 bg-slate-900/40 p-6 md:col-span-1"
             >
+              {/* Honeypot */}
               <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
+
               <div className="grid grid-cols-1 gap-4">
                 <div>
                   <label htmlFor="name" className="text-sm text-slate-300">Name</label>
-                  <input id="name" name="name" required autoComplete="name"
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    autoComplete="name"
                     className="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-slate-100 placeholder-slate-500"
-                    placeholder="Your name" />
+                    placeholder="Your name"
+                  />
                 </div>
+
                 <div>
                   <label htmlFor="email" className="text-sm text-slate-300">Email</label>
-                  <input id="email" name="email" type="email" required autoComplete="email"
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
                     className="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-slate-100 placeholder-slate-500"
-                    placeholder="you@company.com" />
+                    placeholder="you@company.com"
+                  />
                 </div>
+
                 <div>
                   <label htmlFor="company" className="text-sm text-slate-300">Company</label>
-                  <input id="company" name="company" autoComplete="organization"
+                  <input
+                    id="company"
+                    name="company"
+                    autoComplete="organization"
                     className="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-slate-100 placeholder-slate-500"
-                    placeholder="Company LLC" />
+                    placeholder="Company LLC"
+                  />
                 </div>
+
                 <div>
                   <label htmlFor="message" className="text-sm text-slate-300">What do you need help with?</label>
-                  <textarea id="message" name="message" rows={4}
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
                     className="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-2 text-slate-100 placeholder-slate-500"
-                    placeholder="Tell us a bit about your goals or issues…" />
+                    placeholder="Tell us a bit about your goals or issues…"
+                  />
                 </div>
               </div>
-              <button type="submit" className="mt-4 w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-900">
+
+              {/* Formspree auto-detects _replyto if present; optional */}
+              <input type="hidden" name="_replyto" value="" />
+
+              <button
+                type="submit"
+                className="mt-4 w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-900"
+              >
                 Send inquiry
               </button>
+
               <p className="mt-3 text-center text-xs text-slate-500">
                 By submitting, you agree to our terms &amp; privacy policy.
               </p>
             </form>
 
-            {/* Calendly – re-inits on every mount and after client navigation */}
-            <div className="rounded-3xl border border-slate-800 bg-slate-900/40 p-0">
-              <CalendlyEmbed url={CALENDLY_URL} className="rounded-3xl" />
-            </div>
+            {/* Calendly (typed, script/css handled inside the component) */}
+            <CalendlyEmbed
+              url="https://calendly.com/stormshieldit/30min"
+              className="rounded-3xl border border-slate-800 bg-slate-900/40 p-0"
+              height={620}
+            />
           </div>
         </section>
       </main>
