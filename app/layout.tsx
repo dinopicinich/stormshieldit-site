@@ -1,11 +1,21 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Shared layout pieces
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "StormShield IT",
@@ -20,23 +30,33 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Favicons (optional) */}
-        <link rel="icon" href="/favicon-32.png" sizes="32x32" />
+        {/* Favicons */}
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon-512.png" sizes="512x512" />
 
-        {/* Calendly stylesheet (MUST be lowercase <link>) */}
+        {/* Calendly stylesheet */}
         <link
           href="https://assets.calendly.com/assets/external/widget.css"
           rel="stylesheet"
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Calendly script for inline embeds (safe in body via next/script) */}
-        <Script
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-slate-100`}
+      >
+        {/* Shared Header */}
+        <SiteHeader />
+
+        {/* Page content */}
+        <main>{children}</main>
+
+        {/* Shared Footer */}
+        <SiteFooter />
+
+        {/* Calendly script (needed for inline embeds) */}
+        <script
           src="https://assets.calendly.com/assets/external/widget.js"
-          strategy="afterInteractive"
-        />
-        {children}
+          async
+        ></script>
       </body>
     </html>
   );

@@ -1,95 +1,69 @@
 "use client";
 
-import Link from "next/link";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-
 export default function PricingPage() {
-  const plans = [
-    {
-      name: "Core",
-      price: "$79",
-      unit: "per user / month",
-      features: [
-        "Helpdesk & remote support",
-        "Patch & asset management",
-        "M365 administration",
-        "Backup monitoring",
-      ],
-    },
-    {
-      name: "Secure",
-      price: "$109",
-      unit: "per user / month",
-      features: [
-        "Everything in Core",
-        "MDR + EDR protection",
-        "Email security & phishing defense",
-        "Security awareness training",
-      ],
-    },
-    {
-      name: "Complete",
-      price: "Custom",
-      unit: "per user",
-      features: [
-        "Everything in Secure",
-        "vCIO & quarterly reviews",
-        "Compliance reporting",
-        "Onsite & after-hours options",
-      ],
-    },
-  ];
-
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <SiteHeader />
-
-      <section className="mx-auto max-w-7xl px-4 py-16">
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Simple, predictable pricing
+    <div className="min-h-screen bg-slate-950 text-slate-100 px-6 py-16">
+      <div className="mx-auto max-w-5xl">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-6">
+          Simple, Transparent Pricing
         </h1>
-        <p className="mt-4 max-w-3xl text-slate-300">
-          Per-user plans that include security by default. No surprises.
+        <p className="text-lg text-slate-300 mb-10">
+          Predictable monthly plans. Scale as you grow. No surprises.
         </p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6"
-            >
-              <h3 className="text-xl font-bold">{p.name}</h3>
-              <div className="mt-3 flex items-end gap-2">
-                <span className="text-3xl font-extrabold">{p.price}</span>
-                <span className="text-sm text-slate-400">{p.unit}</span>
-              </div>
-              <ul className="mt-4 space-y-2 text-slate-300">
-                {p.features.map((f) => (
-                  <li key={f}>• {f}</li>
-                ))}
-              </ul>
+        <div className="grid gap-6 md:grid-cols-3">
+          {/* Starter */}
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+            <h2 className="text-xl font-semibold mb-2">Starter</h2>
+            <p className="text-3xl font-extrabold mb-4">$XX<span className="text-base font-semibold text-slate-400">/user</span></p>
+            <ul className="text-slate-400 space-y-2">
+              <li>Helpdesk (business hours)</li>
+              <li>Patch & asset management</li>
+              <li>Basic security stack</li>
+            </ul>
+          </div>
+
+          {/* Growth */}
+          <div className="rounded-2xl border border-emerald-600/40 bg-slate-900 p-6 shadow-lg ring-1 ring-emerald-600/20">
+            <div className="inline-block rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 mb-3">
+              Most Popular
             </div>
-          ))}
+            <h2 className="text-xl font-semibold mb-2">Growth</h2>
+            <p className="text-3xl font-extrabold mb-4">$YY<span className="text-base font-semibold text-slate-400">/user</span></p>
+            <ul className="text-slate-400 space-y-2">
+              <li>24/7 helpdesk + SLAs</li>
+              <li>EDR/MDR + email security</li>
+              <li>Backup & recovery</li>
+            </ul>
+          </div>
+
+          {/* Enterprise */}
+          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
+            <h2 className="text-xl font-semibold mb-2">Enterprise</h2>
+            <p className="text-3xl font-extrabold mb-4">Custom</p>
+            <ul className="text-slate-400 space-y-2">
+              <li>vCIO / compliance support</li>
+              <li>SIEM, DLP, IAM strategy</li>
+              <li>Tailored onboarding & training</li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-10 flex gap-3">
-          <Link
+        <div className="mt-12 flex gap-4">
+          <a
             href="/contact#book-call"
-            className="rounded-2xl bg-emerald-500 px-6 py-3 font-semibold text-slate-900"
+            className="rounded-xl bg-emerald-500 px-6 py-3 text-slate-900 font-semibold shadow-lg hover:bg-emerald-400 transition"
           >
             Book a Call
-          </Link>
-          <Link
+          </a>
+          <a
             href="/contact"
-            className="rounded-2xl border border-slate-700 px-6 py-3 font-semibold text-slate-100"
+            className="rounded-xl bg-cyan-500 px-6 py-3 text-slate-900 font-semibold shadow-lg hover:bg-cyan-400 transition"
           >
-            Request a Custom Quote
-          </Link>
+            Request a Quote
+          </a>
         </div>
-      </section>
-
-      <SiteFooter />
-    </main>
+      </div>
+    </div>
   );
 }
