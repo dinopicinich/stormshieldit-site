@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const navItems = [
-    { name: "Services", href: "#services" },
-    { name: "Why Us", href: "#why-us" },
-    { name: "Industries", href: "#industries" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "/contact" },
-    { name: "About", href: "/about" },
+    { name: "Services",   href: "/services" },
+    { name: "Why Us",     href: "/why-us" },
+    { name: "Industries", href: "/industries" },
+    { name: "Pricing",    href: "/pricing" },
+    { name: "Contact",    href: "/contact" },
+    { name: "About",      href: "/about" },
   ];
 
   // mobile menu
@@ -26,7 +27,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/70 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-          <a href="#home" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <Image
               src="/logo-header-220.png"
               alt="StormShield IT"
@@ -38,35 +39,35 @@ export default function HomePage() {
               style={{ height: "auto", width: "auto" }}
             />
             <span className="text-xl font-extrabold tracking-tight">StormShield IT</span>
-          </a>
+          </Link>
 
           <nav className="hidden gap-6 md:flex">
             {navItems.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm text-slate-300 hover:text-white">
+              <Link key={item.name} href={item.href} className="text-sm text-slate-300 hover:text-white">
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="flex gap-3">
-            <a
+            <Link
               href="/contact#book-call"
               className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-300 hover:bg-emerald-500/20"
             >
               Book a call
-            </a>
-            <a
+            </Link>
+            <Link
               href="/contact"
               className="rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-300 hover:bg-cyan-500/20"
             >
               Get a quote
-            </a>
+            </Link>
           </div>
         </div>
       </header>
 
       {/* Floating sticky Book a Call button */}
-      <a
+      <Link
         href="/contact#book-call"
         aria-label="Book a call"
         className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-3 font-semibold text-slate-900 shadow-lg shadow-emerald-500/30 ring-1 ring-emerald-400/40 transition hover:translate-y-[-1px] focus:outline-none focus:ring-2 focus:ring-emerald-300 md:px-6"
@@ -76,7 +77,7 @@ export default function HomePage() {
           <path d="M6 5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14l-4-3H8a2 2 0 0 1-2-2V5Z" stroke="currentColor" strokeWidth="2" />
         </svg>
         <span>Book a call</span>
-      </a>
+      </Link>
 
       {/* Mobile hamburger */}
       <button
@@ -103,24 +104,24 @@ export default function HomePage() {
               rock-solid support.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
+              <Link
                 href="/contact#book-call"
                 className="rounded-2xl bg-emerald-500 px-6 py-3 text-slate-900 shadow-lg shadow-emerald-500/20 transition hover:translate-y-[-1px]"
               >
                 Book a Call
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="rounded-2xl bg-cyan-500 px-6 py-3 text-slate-900 shadow-lg shadow-cyan-500/20 transition hover:translate-y-[-1px]"
               >
                 Talk to Sales
-              </a>
-              <a
-                href="#services"
+              </Link>
+              <Link
+                href="/services"
                 className="rounded-2xl border border-slate-700 px-6 py-3 text-slate-200 hover:border-slate-500"
               >
                 Explore Services
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex justify-center">
@@ -135,12 +136,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* TODO: your Services / Why Us / Industries / Pricing sections live here */}
-      {/* <section id="services">…</section> */}
-      {/* <section id="why-us">…</section> */}
-      {/* <section id="industries">…</section> */}
-      {/* <section id="pricing">…</section> */}
 
       {/* Footer */}
       <footer className="border-t border-slate-800/60">
@@ -157,9 +152,9 @@ export default function HomePage() {
             <span className="text-sm">© {new Date().getFullYear()} StormShield IT • Jupiter, FL</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
-            <a href="#services" className="text-slate-400 hover:text-slate-200">Services</a>
-            <a href="#pricing" className="text-slate-400 hover:text-slate-200">Pricing</a>
-            <a href="/contact" className="text-slate-400 hover:text-slate-200">Contact</a>
+            <Link href="/services" className="text-slate-400 hover:text-slate-200">Services</Link>
+            <Link href="/pricing"  className="text-slate-400 hover:text-slate-200">Pricing</Link>
+            <Link href="/contact"  className="text-slate-400 hover:text-slate-200">Contact</Link>
           </div>
         </div>
       </footer>
@@ -188,14 +183,14 @@ export default function HomePage() {
 
             <nav className="grid gap-2">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className="rounded-xl px-4 py-3 text-base font-medium text-slate-200 hover:bg-slate-800"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
