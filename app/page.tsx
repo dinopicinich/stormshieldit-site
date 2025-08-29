@@ -1,12 +1,16 @@
 "use client";
 
-import type React from "react";
 import Image from "next/image";
 import Head from "next/head";
-import { useState, useEffect } from "react";
 import Script from "next/script";
+import { useEffect, useState } from "react";
 
 export default function StormShieldLanding() {
+  // ---- constants ----
+  const CALENDLY_URL = "https://calendly.com/stormshieldit/30min";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnnbqnlw";
+
+  // ---- nav ----
   const navItems = [
     { name: "Services", href: "#services" },
     { name: "Why Us", href: "#why-us" },
@@ -16,37 +20,26 @@ export default function StormShieldLanding() {
     { name: "About", href: "/about" },
   ];
 
-  // ---- constants ----
-  const CALENDLY_URL = "https://calendly.com/stormshieldit/30min";
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/mnnbqnlw";
-
-  // ---- ui state ----
+  // ---- UI state ----
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close on ESC and lock scroll when open
+  // Close on ESC + lock scroll when sheet is open
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileOpen(false);
-    };
+    const onKeyDown = (e: KeyboardEvent) => e.key === "Escape" && setMobileOpen(false);
     if (mobileOpen) {
       document.addEventListener("keydown", onKeyDown);
-      // lock page scroll
       const prev = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       return () => {
         document.removeEventListener("keydown", onKeyDown);
         document.body.style.overflow = prev;
       };
-    } else {
-      return () => {
-        document.removeEventListener("keydown", onKeyDown);
-      };
     }
   }, [mobileOpen]);
 
-  // ---- submit handler (tolerant + no console noise) ----
+  // ---- submit handler ----
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -80,7 +73,6 @@ export default function StormShieldLanding() {
         body: body.toString(),
       });
 
-      // Be generous about success (2xx/3xx or JSON { ok: true })
       let success =
         res.ok || (res.status >= 200 && res.status < 400) || res.type === "opaqueredirect";
 
@@ -90,12 +82,8 @@ export default function StormShieldLanding() {
         if (data?.ok === true) success = true;
       }
 
-      if (success) {
-        setStatus("success");
-        formEl.reset();
-      } else {
-        setStatus("error");
-      }
+      setStatus(success ? "success" : "error");
+      if (success) formEl.reset();
     } catch {
       setStatus("error");
     } finally {
@@ -105,6 +93,7 @@ export default function StormShieldLanding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+      {/* Safe even if you also include these in app/layout.tsx */}
       <Head>
         <link rel="icon" href="/favicon-32.png" sizes="32x32" />
         <link rel="icon" href="/favicon-512.png" sizes="512x512" />
@@ -112,7 +101,7 @@ export default function StormShieldLanding() {
       </Head>
       <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
 
-      {/* Nav */}
+      {/* Header */}
       <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/70 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           <a href="#home" className="flex items-center gap-3">
@@ -128,6 +117,7 @@ export default function StormShieldLanding() {
             />
             <span className="text-xl font-extrabold tracking-tight">StormShield IT</span>
           </a>
+
           <nav className="hidden gap-6 md:flex">
             {navItems.map((item) => (
               <a key={item.name} href={item.href} className="text-sm text-slate-300 hover:text-white">
@@ -135,6 +125,7 @@ export default function StormShieldLanding() {
               </a>
             ))}
           </nav>
+
           <div className="hidden md:flex gap-3">
             <a
               href="#book-call"
@@ -152,7 +143,7 @@ export default function StormShieldLanding() {
         </div>
       </header>
 
-      {/* Floating sticky Book a Call button (hidden when menu open) */}
+      {/* Floating “Book a call” (hidden when menu is open) */}
       {!mobileOpen && (
         <a
           href="#book-call"
@@ -165,6 +156,20 @@ export default function StormShieldLanding() {
           </svg>
           <span>Book a call</span>
         </a>
+      )}
+
+      {/* Mobile hamburger */}
+      {!mobileOpen && (
+        <button
+          type="button"
+          aria-label="Open menu"
+          onClick={() => setMobileOpen(true)}
+          className="fixed bottom-6 left-6 z-40 inline-flex items-center justify-center rounded-full bg-slate-800 px-4 py-3 shadow-lg ring-1 ring-white/10 md:hidden hover:bg-slate-700 transition"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
       )}
 
       {/* Hero */}
@@ -213,10 +218,31 @@ export default function StormShieldLanding() {
         </div>
       </section>
 
+      {/* Lightweight sections so nav anchors work */}
+      <section id="services" className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="text-3xl font-extrabold">Services</h2>
+        <p className="mt-3 text-slate-300">Managed IT, cybersecurity, cloud, and always-on helpdesk.</p>
+      </section>
+
+      <section id="why-us" className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="text-3xl font-extrabold">Why Us</h2>
+        <p className="mt-3 text-slate-300">Continuity first, security built-in, fast human support.</p>
+      </section>
+
+      <section id="industries" className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="text-3xl font-extrabold">Industries</h2>
+        <p className="mt-3 text-slate-300">Healthcare, manufacturing, financial services, professional services, and more.</p>
+      </section>
+
+      <section id="pricing" className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="text-3xl font-extrabold">Pricing</h2>
+        <p className="mt-3 text-slate-300">Simple per-user plans with security by default.</p>
+      </section>
+
       {/* Contact */}
       <section id="contact" className="mx-auto max-w-7xl px-4 py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {/* Contact Info */}
+          {/* Info */}
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Let’s talk</h2>
             <p className="mt-3 text-slate-300">
@@ -332,7 +358,7 @@ export default function StormShieldLanding() {
             </p>
           </form>
 
-          {/* Calendly Embed */}
+          {/* Calendly Inline */}
           <div className="rounded-3xl border border-slate-800 bg-slate-900/40 p-0">
             <div
               id="book-call"
@@ -344,6 +370,7 @@ export default function StormShieldLanding() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="border-t border-slate-800/60">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-10 md:flex-row">
           <div className="flex items-center gap-3 text-slate-400">
@@ -371,21 +398,7 @@ export default function StormShieldLanding() {
         </div>
       </footer>
 
-      {/* Floating Mobile Menu (hamburger) — hidden while open */}
-      {!mobileOpen && (
-        <button
-          type="button"
-          aria-label="Open menu"
-          onClick={() => setMobileOpen(true)}
-          className="fixed bottom-6 left-6 z-40 inline-flex items-center justify-center rounded-full bg-slate-800 px-4 py-3 shadow-lg ring-1 ring-white/10 md:hidden hover:bg-slate-700 transition"
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-      )}
-
-      {/* Mobile menu overlay (stronger backdrop + higher z-index + larger panel) */}
+      {/* Mobile menu overlay */}
       {mobileOpen && (
         <div className="fixed inset-0 z-[70] md:hidden" role="dialog" aria-modal="true">
           {/* backdrop */}
@@ -393,8 +406,7 @@ export default function StormShieldLanding() {
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-
-          {/* bottom sheet panel */}
+          {/* bottom sheet */}
           <div className="absolute inset-x-0 bottom-0 max-h-[90vh] min-h-[65vh] rounded-t-3xl border-t border-slate-800 bg-slate-900 p-6 shadow-2xl">
             <div className="mb-4 flex items-center justify-between">
               <span className="text-sm font-semibold text-slate-300">Menu</span>
