@@ -1,43 +1,14 @@
+// app/about/page.tsx
 import Image from "next/image";
-import Link from "next/link";
+import SiteHeader from "../components/SiteHeader";
+import SiteFooter from "../components/SiteFooter";
 
 export default function AboutPage() {
-  const navItems = [
-    { name: "Services", href: "/#services" },
-    { name: "Why Us", href: "/#why-us" },
-    { name: "Industries", href: "/#industries" },
-    { name: "Pricing", href: "/#pricing" },
-    { name: "Contact", href: "/#contact" },
-    { name: "About", href: "/about" },
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100 flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/70 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo-header-220.png"
-              alt="StormShield IT"
-              width={180}
-              height={60}
-              className="h-8 w-auto"
-              priority
-            />
-            <span className="text-xl font-extrabold tracking-tight">StormShield IT</span>
-          </Link>
-          <nav className="hidden gap-6 md:flex">
-            {navItems.map((item) => (
-              <Link key={item.name} href={item.href} className="text-sm text-slate-300 hover:text-white">
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
+      {/* Shared header (aligns with all other pages) */}
+      <SiteHeader />
 
-      {/* Main Content */}
       <main className="flex-1">
         {/* Hero */}
         <section className="mx-auto max-w-6xl px-4 py-16 md:py-24">
@@ -58,7 +29,7 @@ export default function AboutPage() {
         {/* Founders */}
         <section className="mx-auto max-w-6xl px-4 pb-20">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {/* Dino LEFT */}
+            {/* Dino */}
             <article className="rounded-3xl border border-slate-800 bg-slate-900/40 p-6 md:p-8">
               <div className="flex items-start gap-6">
                 <Image
@@ -80,7 +51,7 @@ export default function AboutPage() {
               </div>
             </article>
 
-            {/* Olivia RIGHT */}
+            {/* Olivia */}
             <article className="rounded-3xl border border-slate-800 bg-slate-900/40 p-6 md:p-8">
               <div className="flex items-start gap-6">
                 <Image
@@ -115,37 +86,8 @@ export default function AboutPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800/60">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-10 md:flex-row">
-          <div className="flex items-center gap-3 text-slate-400">
-            <Image
-              src="/logo-header-220.png"
-              alt="StormShield IT Small Logo"
-              width={160}
-              height={52}
-              className="h-6 w-auto"
-            />
-            <span className="text-sm">
-              © {new Date().getFullYear()} StormShield IT • Jupiter, FL
-            </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm">
-            <Link href="/#services" className="text-slate-400 hover:text-slate-200">
-              Services
-            </Link>
-            <Link href="/#pricing" className="text-slate-400 hover:text-slate-200">
-              Pricing
-            </Link>
-            <Link href="/#contact" className="text-slate-400 hover:text-slate-200">
-              Contact
-            </Link>
-            <Link href="/about" className="text-slate-400 hover:text-slate-200">
-              About
-            </Link>
-          </div>
-        </div>
-      </footer>
+      {/* Shared footer */}
+      <SiteFooter />
     </div>
   );
 }

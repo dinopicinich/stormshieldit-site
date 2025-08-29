@@ -8,11 +8,11 @@ import Script from "next/script";
 
 export default function StormShieldLanding() {
   const navItems = [
-    { name: "Services", href: "#services" },
-    { name: "Why Us", href: "#why-us" },
-    { name: "Industries", href: "#industries" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "#contact" },
+    { name: "Services", href: "/services" },
+    { name: "Why Us", href: "/why-us" },
+    { name: "Industries", href: "/industries" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Contact", href: "/contact" },
     { name: "About", href: "/about" },
   ];
 
@@ -181,19 +181,19 @@ export default function StormShieldLanding() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#book-call"
+                href="/contact#book-call"
                 className="rounded-2xl bg-emerald-500 px-6 py-3 text-slate-900 shadow-lg shadow-emerald-500/20 transition hover:translate-y-[-1px]"
               >
                 Book a Call
               </a>
               <a
-                href="#contact"
+                href="/contact"
                 className="rounded-2xl bg-cyan-500 px-6 py-3 text-slate-900 shadow-lg shadow-cyan-500/20 transition hover:translate-y-[-1px]"
               >
                 Talk to Sales
               </a>
               <a
-                href="#services"
+                href="/services"
                 className="rounded-2xl border border-slate-700 px-6 py-3 text-slate-200 hover:border-slate-500"
               >
                 Explore Services
@@ -358,13 +358,13 @@ export default function StormShieldLanding() {
             <span className="text-sm">© {new Date().getFullYear()} StormShield IT • Jupiter, FL</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
-            <a href="#services" className="text-slate-400 hover:text-slate-200">
+            <a href="/services" className="text-slate-400 hover:text-slate-200">
               Services
             </a>
-            <a href="#pricing" className="text-slate-400 hover:text-slate-200">
+            <a href="/pricing" className="text-slate-400 hover:text-slate-200">
               Pricing
             </a>
-            <a href="#contact" className="text-slate-400 hover:text-slate-200">
+            <a href="/contact" className="text-slate-400 hover:text-slate-200">
               Contact
             </a>
           </div>
