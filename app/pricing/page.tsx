@@ -1,78 +1,95 @@
 "use client";
 
 import Link from "next/link";
-import SiteHeader from "../components/SiteHeader";
-import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function PricingPage() {
+  const plans = [
+    {
+      name: "Core",
+      price: "$79",
+      unit: "per user / month",
+      features: [
+        "Helpdesk & remote support",
+        "Patch & asset management",
+        "M365 administration",
+        "Backup monitoring",
+      ],
+    },
+    {
+      name: "Secure",
+      price: "$109",
+      unit: "per user / month",
+      features: [
+        "Everything in Core",
+        "MDR + EDR protection",
+        "Email security & phishing defense",
+        "Security awareness training",
+      ],
+    },
+    {
+      name: "Complete",
+      price: "Custom",
+      unit: "per user",
+      features: [
+        "Everything in Secure",
+        "vCIO & quarterly reviews",
+        "Compliance reporting",
+        "Onsite & after-hours options",
+      ],
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100 flex flex-col">
+    <main className="min-h-screen bg-slate-950 text-slate-100">
       <SiteHeader />
 
-      <main className="flex-1 mx-auto max-w-7xl px-4 py-16">
-        <h1 className="text-4xl font-extrabold mb-4">Simple, predictable pricing</h1>
-        <p className="max-w-3xl text-lg text-slate-300 mb-10">
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Simple, predictable pricing
+        </h1>
+        <p className="mt-4 max-w-3xl text-slate-300">
           Per-user plans that include security by default. No surprises.
         </p>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {/* Core */}
-          <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-6">
-            <h3 className="text-xl font-semibold">Core</h3>
-            <div className="mt-2 text-3xl font-extrabold">$79</div>
-            <div className="text-slate-400 mb-4">per user / month</div>
-            <ul className="space-y-2 text-slate-300">
-              <li>• Helpdesk & remote support</li>
-              <li>• Patch & asset management</li>
-              <li>• M365 administration</li>
-              <li>• Backup monitoring</li>
-            </ul>
-          </div>
-
-          {/* Secure */}
-          <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-6">
-            <h3 className="text-xl font-semibold">Secure</h3>
-            <div className="mt-2 text-3xl font-extrabold">$109</div>
-            <div className="text-slate-400 mb-4">per user / month</div>
-            <ul className="space-y-2 text-slate-300">
-              <li>• Everything in Core</li>
-              <li>• MDR + EDR protection</li>
-              <li>• Email security & phishing defense</li>
-              <li>• Security awareness training</li>
-            </ul>
-          </div>
-
-          {/* Complete */}
-          <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-6">
-            <h3 className="text-xl font-semibold">Complete</h3>
-            <div className="mt-2 text-3xl font-extrabold">Custom</div>
-            <div className="text-slate-400 mb-4">per user</div>
-            <ul className="space-y-2 text-slate-300">
-              <li>• Everything in Secure</li>
-              <li>• vCIO & quarterly reviews</li>
-              <li>• Compliance reporting</li>
-              <li>• Onsite & after-hours options</li>
-            </ul>
-          </div>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {plans.map((p) => (
+            <div
+              key={p.name}
+              className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6"
+            >
+              <h3 className="text-xl font-bold">{p.name}</h3>
+              <div className="mt-3 flex items-end gap-2">
+                <span className="text-3xl font-extrabold">{p.price}</span>
+                <span className="text-sm text-slate-400">{p.unit}</span>
+              </div>
+              <ul className="mt-4 space-y-2 text-slate-300">
+                {p.features.map((f) => (
+                  <li key={f}>• {f}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-12 flex flex-wrap gap-3">
+        <div className="mt-10 flex gap-3">
           <Link
             href="/contact#book-call"
-            className="rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-slate-900 shadow hover:bg-emerald-400"
+            className="rounded-2xl bg-emerald-500 px-6 py-3 font-semibold text-slate-900"
           >
             Book a Call
           </Link>
           <Link
             href="/contact"
-            className="rounded-xl border border-slate-700 px-6 py-3 font-semibold text-slate-200 hover:bg-slate-800"
+            className="rounded-2xl border border-slate-700 px-6 py-3 font-semibold text-slate-100"
           >
             Request a Custom Quote
           </Link>
         </div>
-      </main>
+      </section>
 
       <SiteFooter />
-    </div>
+    </main>
   );
 }
